@@ -29,9 +29,6 @@ Hemlock is a defensive AI system designed to protect digital artworks from being
 
 - **Feature Extraction**: Extract features from original and style-transferred images using encoders.
 - **Cosine Similarity**: Compute similarity between original and styled feature maps:
-  \[
-  S(f_o, f_s) = \frac{f_o \cdot f_s}{\|f_o\| \|f_s\|}
-  \]
 - **Feature Integration**: Replace features in original image where similarity is in the range [0.12, 0.45].
 
 ---
@@ -42,23 +39,18 @@ To minimize visual distortion while cloaking, a combined loss is used:
 
 ### Perceptual Loss (LPIPS)
 Compares high-level features from pre-trained VGG network to preserve perceptual similarity:
-\[
-LPIPS = \sum_{i=1}^L \|\phi_i(\hat{y}) - \phi_i(y)\|^2_2
-\]
+**LPIPS** = Σᵢ ‖ϕᵢ(ŷ) - ϕᵢ(y)‖²₂ 
 
 ### MSE / PSNR Loss
 Pixel-level loss ensuring minimal perturbation:
-\[
-MSE(x, y) = \frac{1}{n} \sum_{i=1}^n (x_i - y_i)^2
-\]
-\[
-PSNR = 10 \cdot \log_{10} \left(\frac{MAX^2}{MSE}\right)
-\]
+
+**MSE(x, y)** = (1/n) * Σ (xᵢ - yᵢ)²  
+**PSNR** = 10 * log₁₀(MAX² / MSE)  
+Where MAX is the maximum possible pixel value (typically 255).
 
 ### Combined Loss
-\[
-\text{Total Loss} = (1 - \alpha) \cdot LPIPS + \alpha \cdot MSE
-\]
+**Total Loss** = (1 - α) * LPIPS + α * MSE  
+Where α ∈ [0, 1] is a tunable weight.
 
 ---
 
